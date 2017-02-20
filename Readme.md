@@ -1,10 +1,10 @@
-# PHP HTTP Request Library
+## PHP HTTP Request Library
 
 > I am using the simple library for my codeigniter projects. But it is not mean you have to use only for codeigniter. It is simple but also usefull for me.
 
 ### Usage for Codeigniter
 
-copy class file under your codeigniter application library folder.
+> copy class file under your codeigniter application library folder.
 
 
 
