@@ -1,9 +1,15 @@
 <?php
+/*
+ * HTTP Request
+ * Authors: Mohikan
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
+ * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project: https://github.com/mohikan/PHP-Http-Request-Library
+ */
+
 class Http {
 
-    /**
-     * Construct
-     */
     public function __construct(){
         
     }
@@ -59,9 +65,7 @@ class Http {
         curl_close($ch);
 
         if($err){
-            // log error
-            // return "request error : $err ";
-            return false;
+            return "request error : $err ";
         } else {
             return $result;
         }
