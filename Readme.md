@@ -7,37 +7,39 @@ But it is not mean you have to use only for codeigniter.
 
 copy class file under your codeigniter application library folder.
 
-1. load library
+
+
+* load library
 
 ```php
 $this->load->library('Http');
 ```
 
-2. make any type of request 
+* make any type of request 
 
 ```php
 $response = $this->Http->Request(URL, POSTDATA(Array)(Optional), HEADERS(Array)(Optional), CUSTOM(PUT|DELETE)(Optional));
 ```
 
-2. get request 
+* get request 
 
 ```php
 $response = $this->Http->Get(URL, HEADERS(Array)(Optional));
 ```
 
-2. post request 
+* post request 
 
 ```php
 $response = $this->Http->Post(URL, POSTDATA(Array)(Optional), HEADERS(Array)(Optional));
 ```
 
-2. put request 
+* put request 
 
 ```php
 $response = $this->Http->Put(URL, POSTDATA(Array)(Optional), HEADERS(Array)(Optional));
 ```
 
-2. delete request 
+* delete request 
 
 ```php
 $response = $this->Http->Delete(URL, POSTDATA(Array)(Optional), HEADERS(Array)(Optional));
