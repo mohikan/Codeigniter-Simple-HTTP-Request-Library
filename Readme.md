@@ -9,6 +9,6 @@ copy class file under your codeigniter application library folder.
 
 load library
 
-'''php
+```php
 $this->load->library('Http');
-'''
+```
