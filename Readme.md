@@ -22,8 +22,7 @@ $config = array(
   'ssl_verif_host'    => true,
   'request_timeout'   => 30,
   'response_timeout'  => 90,
-  'accept_cookies'    => false,
-  'keep_cookies'      => false
+  'accept_cookies'    => false
 );
 
 $this->load->library('Http', $config);
