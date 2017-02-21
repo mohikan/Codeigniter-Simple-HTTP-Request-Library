@@ -1,4 +1,4 @@
-## PHP HTTP Request Library
+## Codeigniter Simple HTTP Request Library
 
 > I am using the simple library for my codeigniter projects. But it is not mean you have to use only for codeigniter. It is simple but also usefull for me.
 
