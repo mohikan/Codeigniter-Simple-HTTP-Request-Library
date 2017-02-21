@@ -115,7 +115,7 @@ class Http {
         if($this->accept_cookies === true){
         	$cookie_file = sys_get_temp_dir() . '/cookies.txt';
         	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
-			curl_setopt($ch, CURLOPT_COOKIEJAR,  $cookie_file);
+		curl_setopt($ch, CURLOPT_COOKIEJAR,  $cookie_file);
         }
 
         if($header != ''){
