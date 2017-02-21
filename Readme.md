@@ -29,7 +29,7 @@ $config = array(
 $this->load->library('Http', $config);
 ```
 
-Codeigniter case sensitive for methods.
+Codeigniter case sensitive for method names.
 
 
 * make any type of request 
