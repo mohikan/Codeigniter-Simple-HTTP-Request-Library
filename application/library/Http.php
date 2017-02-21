@@ -29,7 +29,7 @@ class Http {
 	 *
 	 * @var integer
 	 */
-	public $connect_timeout  = 30;
+	public $request_timeout  = 30;
 
 
 	/**
@@ -37,7 +37,7 @@ class Http {
 	 *
 	 * @var integer
 	 */
-	public $timeout          = 90;
+	public $response_timeout  = 90;
 
 
 	/**
@@ -46,14 +46,6 @@ class Http {
 	 * @var boolean
 	 */
 	public $accept_cookies   = false;
-
-
-	/**
-	 * Reference curl keep cookies
-	 *
-	 * @var boolean
-	 */
-	public $keep_cookies     = false;
 
 
     /**
@@ -68,25 +60,25 @@ class Http {
         log_message('info', 'Http Class Initialized');
     }
 
-	public function Get($url, $headers = []){
+	public function Get($url, $headers = ''){
 		return $this->Request($url, $headers);
 	}
 
-	public function Post($url, $post = [], $headers = []){
+	public function Post($url, $post = '', $headers = ''){
 		return $this->Request($url, $post, $headers);
 	}
 
-	public function Put($url, $post = [], $headers = []){
+	public function Put($url, $post = '', $headers = ''){
 		return $this->Request($url, $post, $headers, 'PUT');
 	}
 
-	public function Delete($url, $post = [], $headers = []){
+	public function Delete($url, $post = '', $headers = ''){
 		return $this->Request($url, $post, $headers, 'DELETE');
 	}
 
-    public function Request($url, $post = [], $headers = [], $custom = ''){
+    public function Request($url, $post = '', $header = '', $custom = ''){
 
-        $headers = array();
+        $headers   = array();
         $headers[] = "Cache-control: no-cache";
         $headers[] = "Language: en";
         $headers[] = "Postman-token: 3181cbed-cbce-474f-a2fa-9e630b24fb94";
@@ -99,12 +91,12 @@ class Http {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if($custom != ''){
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $custom);
         }
 
-        if(count($post) > 0){
+        if($post != ''){
 
-            if($custom == ''){
+            if(is_array($post)){
                 // post
                 $post = http_build_query($post);
                 $headers[] = "Content-type: application/x-www-form-urlencoded";
@@ -120,22 +112,30 @@ class Http {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         }
 
-        if(count($headers) > 0){
-            $headers[] = $headers;
+        if($this->accept_cookies === true){
+        	$cookie_file = sys_get_temp_dir() . '/cookies.txt';
+        	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+			curl_setopt($ch, CURLOPT_COOKIEJAR,  $cookie_file);
         }
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->ssl_verify_peer);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $this->ssl_verify_host);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connect_timeout);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+        if($header != ''){
+            $headers[] = $header;
+        }
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER	, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, $this->ssl_verify_peer);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST	, $this->ssl_verif_host);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT	, $this->request_timeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT 	, $this->response_timeout);
 
         $result = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
 
         if($err){
-            return "request error : $err ";
+            // log error
+            // return "request error : $err ";
+            return false;
         } else {
             return $result;
         }
