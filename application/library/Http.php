@@ -1,5 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+ * Http - PHP Curl Based Http Request Library for Codeigniter
+ * Authors: Mohikan
+ * Use, reproduction, distribution, and modification of this code is subject to the terms and
+ * conditions of the MIT license, available at http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project: https://github.com/mohikan/Codeigniter-Simple-HTTP-Request-Library
+ */
 class Http {
 
 	/**
