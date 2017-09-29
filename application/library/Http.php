@@ -48,17 +48,16 @@ class Http {
 	public $accept_cookies   = false;
 
 
-    /**
-     * Construct
-     */
-    public function __construct($config = []){
+	/**
+	* Construct
+	*/
+	public function __construct($config = []){
 
-    	foreach ($config as $key => $value) {
-    		$this->$key = $value;
-    	}
+		foreach ($config as $key => $value) {
+			$this->$key = $value;
+		}
 
-        log_message('info', 'Http Class Initialized');
-    }
+	}
 
 	public function Get($url, $headers = ''){
 		return $this->Request($url, $headers);
@@ -76,69 +75,67 @@ class Http {
 		return $this->Request($url, $post, $headers, 'DELETE');
 	}
 
-    public function Request($url, $post = '', $header = '', $custom = ''){
+	public function Request($url, $post = '', $header = '', $custom = ''){
 
-        $headers   = array();
-        $headers[] = "Cache-control: no-cache";
-        $headers[] = "Language: en";
-        $headers[] = "Postman-token: 3181cbed-cbce-474f-a2fa-9e630b24fb94";
-        $headers[] = "source_id: " . date("YmdHis");
-        $headers[] = "show_sensitive_data: 1";
-        $headers[] = "time_zone: UTC +02:00";
-        
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$headers   = array();
+		$headers[] = "Cache-control: no-cache";
+		$headers[] = "Language: en";
+		$headers[] = "Postman-token: 3181cbed-cbce-474f-a2fa-9e630b24fb94";
+		$headers[] = "source_id: " . date("YmdHis");
+		$headers[] = "show_sensitive_data: 1";
+		$headers[] = "time_zone: UTC +02:00";
 
-        if($custom != ''){
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $custom);
-        }
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-        if($post != ''){
+		if($custom != ''){
+		    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $custom);
+		}
 
-            if(is_array($post)){
-                // post
-                $post = http_build_query($post);
-                $headers[] = "Content-type: application/x-www-form-urlencoded";
-            } else {
-                // json
-                $headers[] = "Content-type: application/Json";
-            }
+		if($post != ''){
 
-            if($custom == ''){
-                curl_setopt($ch, CURLOPT_POST, 1);
-            }
-            
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
-        }
+		    if(is_array($post)){
+			// post
+			$post = http_build_query($post);
+			$headers[] = "Content-type: application/x-www-form-urlencoded";
+		    } else {
+			// json
+			$headers[] = "Content-type: application/Json";
+		    }
 
-        if($this->accept_cookies === true){
-        	$cookie_file = sys_get_temp_dir() . '/cookies.txt';
-        	curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
-		curl_setopt($ch, CURLOPT_COOKIEJAR,  $cookie_file);
-        }
+		    if($custom == ''){
+			curl_setopt($ch, CURLOPT_POST, 1);
+		    }
 
-        if($header != ''){
-            $headers[] = $header;
-        }
+		    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+		}
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER	, $headers);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, $this->ssl_verify_peer);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST	, $this->ssl_verif_host);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT	, $this->request_timeout);
-        curl_setopt($ch, CURLOPT_TIMEOUT 	, $this->response_timeout);
+		if($this->accept_cookies === true){
+			$cookie_file = sys_get_temp_dir() . '/cookies.txt';
+			curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie_file);
+			curl_setopt($ch, CURLOPT_COOKIEJAR,  $cookie_file);
+		}
 
-        $result = curl_exec($ch);
-        $err = curl_error($ch);
-        curl_close($ch);
+		if($header != ''){
+		    $headers[] = $header;
+		}
 
-        if($err){
-            // log error
-            // return "request error : $err ";
-            return false;
-        } else {
-            return $result;
-        }
-    }
+		curl_setopt($ch, CURLOPT_HTTPHEADER	, $headers);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER	, $this->ssl_verify_peer);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST	, $this->ssl_verif_host);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT	, $this->request_timeout);
+		curl_setopt($ch, CURLOPT_TIMEOUT 	, $this->response_timeout);
+
+		$result = curl_exec($ch);
+		$err = curl_error($ch);
+		curl_close($ch);
+
+		if($err){
+		    return "request error : $err ";
+		} else {
+		    return $result;
+		}
+	}
 
 }
