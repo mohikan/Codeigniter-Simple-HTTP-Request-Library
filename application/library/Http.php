@@ -19,9 +19,9 @@ class Http {
 	/**
 	 * Reference curl ssl verfy host
 	 *
-	 * @var boolean
+	 * @var int accepts only 0 or 2
 	 */
-	public $ssl_verif_host   = true;
+	public $ssl_verif_host   = 2;
 
 
 	/**
